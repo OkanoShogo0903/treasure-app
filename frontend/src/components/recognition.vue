@@ -15,25 +15,45 @@ const errorHandler = function(error) {
 }
 
 const request = function(method, url, body_text) {
+  console.log("here")
+  console.log(body_text)
+  console.log(JSON.stringify({text: body_text}))
+
+  let params = new URLSearchParams();
+  params.append('text', body_text);
+
+  //axios.post(url, params)
+  axios.post(url, {text: body_text})
+
+  /*
   axios({
       url    : url,
       method : method,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "text/plain",
       },
-      body : {text: body_text}, 
+      body : body_text, 
   })
+
+  */
+
   /* 
-        "Access-Control-Allow-Origin": "*",
-      "Content-Type": "text/plain",
-      mode: 'cors',
+
       headers: {
         "Content-Type": "application/json",
       },
+      body : JSON.stringify({text: body_text})
+
+
+      body : JSON.parse(body_text), 
+
+      "Content-Type": "text/plain",
+      mode: 'cors',
       data   : { text : body_text }
   */
   .then(res => {
     console.log(res.status);
+    console.log(res.data);
   })
   .catch(error => {
       console.log(error);
@@ -69,24 +89,21 @@ recognition.onstart = function() {
 recognition.onresult = function(event) {
   let result = event.results[0][0].transcript;
   this.words = request("POST", "http://localhost:1145/speech", result)
-  alert(result);
+  //alert(result);
 }
 
 recognition.onerror = function(event) {
 }
 
-let is_active = false;
 export default {
   methods: {
     recognitionToggle () {
-      if ( is_active === false ) {
-        is_active = true;
-        recognition.start();
-      }
-      else{
-        is_active = false;
-      }
+      recognition.start();
     }
+  },
+  created(){
+    //request("POST", "http://localhost:1145/speech", "エコー キーボード調べて")
+    request("POST", "http://localhost:1145/speech", "ボブ キーボード")
   }
 }
 </script>

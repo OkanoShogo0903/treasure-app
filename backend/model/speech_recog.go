@@ -1,7 +1,7 @@
 package model
 
 type SpeechResult struct {
-	text string `json:"speech"`
+	Text string `json:"text"`
 }
 
 func New() *SpeechResult {
