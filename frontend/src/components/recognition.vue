@@ -9,16 +9,14 @@
 			<v-btn id="startSpeech" class="headline font-weight-bold mb-3" @click="recognitionToggle()">Recognition</v-btn>
       </v-flex>
     </v-layout>
-		<v-layout justify-center>
-			<a
-				v-for="(res, i) in responses"
-				:key="i"
-				class="subheading mx-3"
-				target="_blank"
-			>
-				{{ res.text }}
-			</a>
+
+		<v-layout text-center wrap >
+			<v-flex v-for="res in responses" class="subheading mx-3" xs6>
+				<span class="mr-2">	{{ res.question }} </span>
+				<span class="mr-2">	{{ res.text }} </span>
+			</v-flex>
 		</v-layout>
+
   </v-container>
 </template>
 
@@ -34,29 +32,6 @@ const errorHandler = function(error) {
   document.getElementById("error").textContent = `${error.name}: ${error.message}`;
 }
 
-const request = function(method, url, body_text) {
-  console.log(JSON.stringify({text: body_text}))
-
-  let params = new URLSearchParams();
-  params.append('text', body_text);
-
-  axios.post(url, {text: body_text})
-  .then(res => {
-    console.log(res.status);
-    console.log(res.data);
-
-		console.log("add result complete 1")
-		addResult(res.data)
-		console.log("add result complete 2")
-
-		//Vue.set(this, res.data);
-		//this.$emit('GET_AJAX_COMPLETE');
-  })
-  .catch(error => {
-      console.log(error);
-  });
-};
-
 const speechRecognition = () => {
   if ("SpeechRecognition" in window) {
     return new SpeechRecognition();
@@ -68,18 +43,13 @@ const speechRecognition = () => {
 }
 
 const recognition = speechRecognition();
-
 recognition.lang = "ja-JP";
 recognition.onstart = function() {
 }
-
 recognition.onresult = function(event) {
-  let result = event.results[0][0].transcript;
-  request("POST", "http://localhost:1145/speech", result)
-	//responses.push(addData);
-  //alert(result);
+	let result = event.results[0][0].transcript;
+	this.request("POST", "http://localhost:1145/speech", result)
 }
-
 recognition.onerror = function(event) {
 }
 
@@ -87,10 +57,8 @@ export default {
   data: () => ({
     responses: [
       {
-        text: 'vuetify-loader',
-      },
-      {
-        text: 'github',
+				question: 'keyboard',
+        text: 'キーボード (keyboard) は、鍵盤を意味する語。 キーボード (楽器) - 鍵盤楽器の鍵盤のことだが、もっぱらシンセサイザーと一体化されているそれを指すことが多い。MIDI信号を送信するだけのMIDIキーボードといったものもある。 キーボード (コンピュータ) - コンピュータへの入力装置。',
       },
     ],
   }),
@@ -98,19 +66,30 @@ export default {
     recognitionToggle () {
       recognition.start();
     },
-		addResult(text){
-			console.log("add responses!!")
-			this.responses[0].text = text
-			console.log(this.responses[0].text);
-			console.log(this.responses[1].text);
+		request(method, url, body_text) {
+			console.log(JSON.stringify({text: body_text}))
+
+			let params = new URLSearchParams();
+			params.append('text', body_text);
+
+			axios.post(url, {text: body_text})
+			.then(res => {
+				console.log(res.status);
+				console.log(res.data);
+				this.addResult(JSON.stringify({text: res.data.text, question: body_text}))
+			})
+			.catch(error => {
+					console.log(error);
+	question		});
+		},
+		addResult(json_res){
+			this.responses.push(json_res)
 		}
   },
   created(){
+
     //request("POST", "http://localhost:1145/speech", "エコー キーボード調べて")
-    this.responses[0].text = "000"
-    this.responses[1].text = request("POST", "http://localhost:1145/speech", "ボブ キーボード")
-    console.log(this.responses[0].text);
-    console.log(this.responses[1].text);
+    this.request("POST", "http://localhost:1145/speech", "ボブ キーボード")
   },
 }
 
