@@ -17,13 +17,6 @@
 
     <v-content>
       <recognition/>
-			<v-layout text-center wrap >
-				<v-flex v-for="i in 2" :key="`6${i}`" xs6>
-					<span class="mr-2">Author Github</span>
-					<span>{{ i }} </span>
-				</v-flex>
-			</v-layout>
-
     </v-content>
   </v-app>
 </template>
