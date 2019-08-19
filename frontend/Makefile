@@ -1,15 +1,7 @@
-install:
-	npm install
+export GO111MODULE := on
 
-dev:
-	npm run dev
+GOOS := linux
+GOARCH := amd64
 
 build:
 	npm run build
-
-setup: __clean install
-	cp .env.example .env
-
-__clean:
-	rm -rf .cache
-	rm -rf node_modules

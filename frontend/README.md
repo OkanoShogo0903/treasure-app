@@ -1,36 +1,29 @@
-# Getting Started
+# my-project
 
-## 1. 環境構築
-
-**make setup**
-
-設定ファイルのコピーとパッケージのセットアップを行う
-
-```console
-❯ make setup
+## Project setup
+```
+yarn install
 ```
 
-**Firebase API Key**
-
-API講義で作ったFirebaseプロジェクトを使う
-
-1. [Firebase](https://firebase.google.com/) のプロジェクトページを開く
-1. `Project Overview` の右にある `⚙(歯車)` ボタンを押して、 `プロジェクトの設定` へ遷移
-1. `Firebase SDK snippet` をコピーして、`.env` ファイルの `FIREBASE_...` に設定する
-
+### Compiles and hot-reloads for development
 ```
-FIREBASE_APIKEY="REPLACE_ME"
-FIREBASE_AUTHDOMAIN="REPLACE_ME"
-FIREBASE_DATABASEURL="REPLACE_ME"
-FIREBASE_PROJECTID="REPLACE_ME"
-FIREBASE_MESSAGINGSENDERID="REPLACE_ME"
-FIREBASE_APPID="REPLACE_ME"
+yarn run serve
 ```
 
-## 2. Hello World
-
-**フロント立ち上げ**
-
-```console
-❯ make dev
+### Compiles and minifies for production
 ```
+yarn run build
+```
+
+### Run your tests
+```
+yarn run test
+```
+
+### Lints and fixes files
+```
+yarn run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

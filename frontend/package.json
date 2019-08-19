@@ -1,39 +1,51 @@
 {
-  "name": "treasureapp",
+  "name": "my-project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "firebase": "^6.3.1",
-    "firebaseui": "^4.1.0",
-    "jquery": "^3.4.1",
-    "preact": "^8.4.2"
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vuetify": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "parcel-bundler": "^1.12.3"
+    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/cli-plugin-eslint": "^3.10.0",
+    "@vue/cli-service": "^3.10.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2"
   },
-  "plugins": [
-    [
-      "@babel/plugin-transform-react-jsx",
-      {
-        "pragma": "h"
-      }
-    ]
-  ],
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
